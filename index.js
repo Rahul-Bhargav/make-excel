@@ -27,7 +27,7 @@ const _ = require('lodash');
  */
 exports.alphaToNum = (alpha) => {
 
-  if(_.isString(alpha)){
+  if (_.isString(alpha)) {
     let num = 0;
     const uppercaseAlpha = _.upperCase(alpha);
     const len = uppercaseAlpha.length;
@@ -48,7 +48,7 @@ exports.alphaToNum = (alpha) => {
  */
 exports.numToAlpha = (num) => {
 
-  if(isNumber(num)){
+  if (isNumber(num)) {
     let alpha = '';
     for (; num >= 0; num = parseInt(num / 26, 10) - 1) {
       alpha = String.fromCharCode(num % 26 + 0x41) + alpha;
@@ -90,7 +90,7 @@ exports.addWorksheet = (workbook, name) => {
  */
 exports.getNextColumn = (currentColumn, steps = 1) => {
 
-  if(_.isString(currentColumn) && isNumber(steps)) {
+  if (_.isString(currentColumn) && isNumber(steps)) {
     let columnNumber = exports.alphaToNum(currentColumn);
     columnNumber += steps;
     return exports.numToAlpha(columnNumber);
@@ -132,13 +132,14 @@ exports.addCellBorder = (cell, border) => {
  */
 exports.createOuterBorder = (start, end, worksheet, borderWidth = 'medium') => {
 
-  if(_.has(start, ['column', 'row']) && _.has(end, ['column', 'row'])) {
-    throw Error('Invalid start end arguments');
+
+  if (!_.has(start, 'column') || !_.has(start, 'row') || !_.has(end, 'column') || !_.has(end, 'row')) {
+    throw Error('Invalid start, end arguments');
   }
-  if( _.hasIn(worksheet, 'getCell')) {
+  if (!_.hasIn(worksheet, 'getCell')) {
     throw Error('A valid worksheet object is not provided');
   }
-  if(_.isString(borderWidth)) {
+  if (!_.isString(borderWidth)) {
     throw Error('A valid border width is not provided');
   }
   const startColNumber = exports.alphaToNum(start.column);

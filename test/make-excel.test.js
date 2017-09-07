@@ -89,10 +89,10 @@ describe('Get next column', function() {
 describe('Add cell border', function() {
   it('should add border to a cell', function() {
     const cell = { border: { top: { style: 'thin' } } };
-    const formattedCell = ExcelHelper.addCellBorder(cell, 
-      { 
-        top: {style: 'medium'},
-        left: {style: 'thin'}
+    const formattedCell = ExcelHelper.addCellBorder(cell,
+      {
+        top: { style: 'medium' },
+        left: { style: 'thin' }
       }
     );
     expect(formattedCell.border.top.style).to.equal('medium');
@@ -114,25 +114,40 @@ describe('Create Outer border ', function() {
       row: '9'
     };
     ExcelHelper.createOuterBorder(start, end, worksheet, 'medium');
+    expect(worksheet.getCell('C5').border.top.style).to.equal('medium');
+    expect(worksheet.getCell('C5').border.left.style).to.equal('medium');
+    expect(worksheet.getCell('G9').border.bottom.style).to.equal('medium');
+    expect(worksheet.getCell('G9').border.right.style).to.equal('medium');
+    expect(worksheet.getCell('E5').border.top.style).to.equal('medium');
   });
-  it('should get the next column with appropriate skipstep', function() {
-    const nextCol = ExcelHelper.getNextColumn('F', 3);
-    expect(nextCol).to.equal('I');
-  });
-  it('should return an error if the input type is not a string', function() {
+  it('should throw an error if the range of cells is invalid', function() {
     try {
-      ExcelHelper.getNextColumn([]);
+      const start = {
+        column: 'C',
+      };
+      const end = {
+        row: '9'
+      };
+      ExcelHelper.createOuterBorder(start, end, worksheet, 'medium');
     }
     catch (err) {
-      expect(err.message).to.equal('Incorrect arguments provided');
+      expect(err.message).to.equal('Invalid start, end arguments');
     }
   });
-  it('should return an error if the skipsteps is not a number', function() {
+  it('should return an error if the border width is not a string', function() {
     try {
-      ExcelHelper.getNextColumn('C', 'asd');
+      const start = {
+        column: 'C',
+        row: '5'
+      };
+      const end = {
+        column: 'G',
+        row: '9'
+      };
+      ExcelHelper.createOuterBorder(start, end, worksheet, 56);
     }
     catch (err) {
-      expect(err.message).to.equal('Incorrect arguments provided');
+      expect(err.message).to.equal('A valid border width is not provided');
     }
   });
 });
