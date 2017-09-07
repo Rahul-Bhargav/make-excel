@@ -35,12 +35,12 @@
   },
   "homepage": "https://github.com/Rahul-Bhargav/make-excel#readme",
   "dependencies": {
-    "exceljs": "^0.4.13"
+    "exceljs": "^0.4.13",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "chai": "^4.0.2",
     "eslint": "^4.1.1",
-    "lodash": "^4.17.4",
     "mocha": "^3.4.2"
   }
 }
