@@ -1,6 +1,6 @@
 {
   "name": "make-excel",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An extension of exceljs to create an Excel(xlsx) file from a simple json.",
   "main": "index.js",
   "scripts": {
